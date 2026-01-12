@@ -10,7 +10,14 @@ export const Footer: React.FC = () => {
             <div className="flex flex-col gap-2 font-mono text-base md:text-lg">
               <a href="#" className="hover:text-white/50 transition-colors">X (TWITTER) ↗</a>
               <a href="#" className="hover:text-white/50 transition-colors">LINKEDIN ↗</a>
-              <a href="#" className="hover:text-white/50 transition-colors">EMAIL ↗</a>
+              <a
+                href="https://wa.me/573115259295?text=Looking%20for%20signal%20in%20the%20noise"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hover:text-white/50 transition-colors"
+              >
+                WHATSAPP ↗
+              </a>
             </div>
           </div>
 

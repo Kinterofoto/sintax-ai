@@ -32,7 +32,7 @@ export const Plans: React.FC = () => {
       <div className="container mx-auto px-6">
         <div className="flex flex-col md:flex-row justify-between items-end mb-24 border-b border-black pb-8">
           <h2 className="text-5xl md:text-7xl font-bold tracking-tighter max-w-xl">
-            ARCHITECTURE<br/>LEVELS
+            ARCHITECTURE<br />LEVELS
           </h2>
           <p className="font-mono text-sm max-w-xs text-right mt-8 md:mt-0">
             Select your required level of operational clarity.
@@ -42,7 +42,7 @@ export const Plans: React.FC = () => {
         <div className="grid grid-cols-1 lg:grid-cols-3 border-l border-black">
           {plans.map((plan, i) => (
             <div key={plan.id} className="border-r border-b lg:border-b-0 border-black p-8 md:p-12 flex flex-col justify-between min-h-[500px] relative hover:bg-neutral-50 transition-colors">
-              
+
               <div className="absolute top-4 right-4 font-mono text-[10px] border border-black px-2 py-0.5 rounded-full">
                 {plan.priceLabel}
               </div>
@@ -52,7 +52,7 @@ export const Plans: React.FC = () => {
                 <p className="font-mono text-xs text-neutral-500 mb-12 h-10">
                   // {plan.tagline}
                 </p>
-                
+
                 <div className="space-y-4">
                   {plan.features.map((feature, idx) => (
                     <div key={idx} className="flex items-center gap-3 group">
@@ -64,9 +64,16 @@ export const Plans: React.FC = () => {
               </div>
 
               <div className="mt-16">
-                <Button variant="primary" className="w-full !bg-black !text-white hover:!bg-white hover:!text-black hover:!border-black border border-transparent">
-                  SELECT_GRID
-                </Button>
+                <a
+                  href="https://wa.me/573115259295?text=Looking%20for%20signal%20in%20the%20noise"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="block"
+                >
+                  <Button variant="primary" className="w-full !bg-black !text-white hover:!bg-white hover:!text-black hover:!border-black border border-transparent">
+                    SELECT_GRID
+                  </Button>
+                </a>
               </div>
             </div>
           ))}
