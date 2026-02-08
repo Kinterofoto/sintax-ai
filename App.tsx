@@ -16,7 +16,9 @@ gsap.registerPlugin(ScrollTrigger);
 
 const App: React.FC = () => {
   useEffect(() => {
-    // Refresh ScrollTrigger on route change or initial load
+    // Show root once React is mounted (prevents white flash)
+    const root = document.getElementById('root');
+    if (root) root.style.opacity = '1';
     ScrollTrigger.refresh();
   }, []);
 

@@ -31,7 +31,7 @@ export const Plans: React.FC = () => {
     <section id="plans" className="bg-white text-black py-24 md:py-32 border-b border-black">
       <div className="container mx-auto px-6">
         <div className="flex flex-col md:flex-row justify-between items-end mb-24 border-b border-black pb-8">
-          <h2 className="text-5xl md:text-7xl font-bold tracking-tighter max-w-xl">
+          <h2 className="text-5xl md:text-7xl font-pixel-line font-bold tracking-tighter max-w-xl">
             ARCHITECTURE<br />LEVELS
           </h2>
           <p className="font-mono text-sm max-w-xs text-right mt-8 md:mt-0">
@@ -48,7 +48,7 @@ export const Plans: React.FC = () => {
               </div>
 
               <div>
-                <h3 className="text-3xl font-bold mb-4">{plan.name}</h3>
+                <h3 className="text-3xl font-pixel-circle font-bold mb-4">{plan.name}</h3>
                 <p className="font-mono text-xs text-neutral-500 mb-12 h-10">
                   // {plan.tagline}
                 </p>

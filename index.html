@@ -1,20 +1,32 @@
 <!DOCTYPE html>
-<html lang="en" class="scroll-smooth">
+<html lang="en" class="scroll-smooth" style="background-color:#050505">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Sintax AI | The Signal in the Noise</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=JetBrains+Mono:wght@100;400;700&display=swap" rel="stylesheet">
+    <style>
+      @font-face { font-family: 'Geist Sans'; src: url('/fonts/Geist-Variable.woff2') format('woff2'); font-weight: 100 900; font-display: swap; }
+      @font-face { font-family: 'Geist Mono'; src: url('/fonts/GeistMono-Variable.woff2') format('woff2'); font-weight: 100 900; font-display: swap; }
+      @font-face { font-family: 'Geist Pixel Square'; src: url('/fonts/GeistPixel-Square.woff2') format('woff2'); font-display: swap; }
+      @font-face { font-family: 'Geist Pixel Grid'; src: url('/fonts/GeistPixel-Grid.woff2') format('woff2'); font-display: swap; }
+      @font-face { font-family: 'Geist Pixel Circle'; src: url('/fonts/GeistPixel-Circle.woff2') format('woff2'); font-display: swap; }
+      @font-face { font-family: 'Geist Pixel Triangle'; src: url('/fonts/GeistPixel-Triangle.woff2') format('woff2'); font-display: swap; }
+      @font-face { font-family: 'Geist Pixel Line'; src: url('/fonts/GeistPixel-Line.woff2') format('woff2'); font-display: swap; }
+    </style>
     <script>
       tailwind.config = {
         theme: {
           extend: {
             fontFamily: {
-              sans: ['Inter', 'sans-serif'],
-              mono: ['JetBrains Mono', 'monospace'],
+              sans: ['Geist Sans', 'sans-serif'],
+              mono: ['Geist Mono', 'monospace'],
+              'pixel': ['Geist Pixel Square', 'monospace'],
+              'pixel-square': ['Geist Pixel Square', 'monospace'],
+              'pixel-grid': ['Geist Pixel Grid', 'monospace'],
+              'pixel-circle': ['Geist Pixel Circle', 'monospace'],
+              'pixel-triangle': ['Geist Pixel Triangle', 'monospace'],
+              'pixel-line': ['Geist Pixel Line', 'monospace'],
             },
             colors: {
               black: '#050505',
@@ -66,8 +78,8 @@
 </script>
 <link rel="stylesheet" href="/index.css">
 </head>
-  <body>
-    <div id="root"></div>
+  <body style="background-color:#050505; color:#F0F0F0">
+    <div id="root" style="opacity:0; transition:opacity 0.3s ease"></div>
   <script type="module" src="/index.tsx"></script>
 </body>
 </html>

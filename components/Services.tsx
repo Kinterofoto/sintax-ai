@@ -36,13 +36,13 @@ export const Services: React.FC = () => {
         {services.map((service, index) => (
           <div key={service.id} className="h-[100dvh] w-screen flex-shrink-0 flex items-center justify-center p-6 md:p-24 border-r border-white/10 bg-black relative overflow-hidden group">
             {/* Background ID */}
-            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-[40vw] md:text-[30vw] font-bold text-neutral-900/40 select-none pointer-events-none group-hover:scale-110 transition-transform duration-1000">
+            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-[40vw] md:text-[30vw] font-pixel-circle font-bold text-neutral-900/40 select-none pointer-events-none group-hover:scale-110 transition-transform duration-1000">
               {service.id}
             </div>
 
             <div className="relative z-10 max-w-4xl w-full">
               <div className="font-mono text-[10px] md:text-xs text-cement mb-4">PROTOCOL // 0{index + 1}</div>
-              <h3 className="text-4xl sm:text-5xl md:text-8xl font-bold uppercase tracking-tighter mb-6 md:mb-8 leading-[0.9] break-words">
+              <h3 className="text-4xl sm:text-5xl md:text-8xl font-pixel-grid font-bold uppercase tracking-tighter mb-6 md:mb-8 leading-[0.9] break-words">
                 {service.redefinedName.replace('_', '_\n')}
               </h3>
               <p className="text-lg md:text-3xl font-light text-neutral-400 max-w-2xl leading-relaxed">
@@ -69,7 +69,7 @@ export const Services: React.FC = () => {
       <section className="h-[40vh] md:h-[50vh] flex items-center justify-center bg-white text-black">
         <div className="text-center px-6">
           <div className="font-mono text-[10px] mb-4">END_OF_PROTOCOLS</div>
-          <h2 className="text-3xl md:text-6xl font-bold tracking-tighter uppercase transition-all duration-500 hover:tracking-normal cursor-default">
+          <h2 className="text-3xl md:text-6xl font-pixel-square font-bold tracking-tighter uppercase transition-all duration-500 hover:tracking-normal cursor-default">
             Ready to scale?
           </h2>
         </div>

@@ -49,7 +49,7 @@ export const Footer: React.FC = () => {
         </div>
 
         <div className="border-t border-white/20 pt-8 flex justify-between items-end">
-          <h1 className="text-[14vw] leading-[0.8] font-bold tracking-tighter text-white mix-blend-difference select-none">
+          <h1 className="text-[14vw] leading-[0.8] font-pixel-square font-bold tracking-tighter text-white mix-blend-difference select-none">
             SINTAX.AI
           </h1>
           <div className="hidden md:block font-mono text-xs text-right pb-4">

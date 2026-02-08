@@ -28,7 +28,7 @@ export const Contact: React.FC = () => {
       <div className="grid grid-cols-1 lg:grid-cols-2">
 
         <div className="p-8 md:p-24 border-b lg:border-b-0 lg:border-r border-white/10 flex flex-col justify-center">
-          <h2 className="text-4xl md:text-7xl font-bold tracking-tighter mb-4 md:mb-6">
+          <h2 className="text-4xl md:text-7xl font-pixel-triangle font-bold tracking-tighter mb-4 md:mb-6">
             INITIATE<br />SEQUENCE
           </h2>
           <p className="font-mono text-xs md:text-sm text-neutral-400 max-w-md">

@@ -13,7 +13,7 @@ export const Manifesto: React.FC = () => {
               <div className="w-2 h-2 bg-black"></div>
               <span className="font-mono text-xs uppercase tracking-widest">Chapter 01: Core Belief</span>
             </div>
-            <h2 className="text-6xl md:text-8xl font-bold tracking-tighter leading-none mb-4">
+            <h2 className="text-6xl md:text-8xl font-pixel-triangle font-bold tracking-tighter leading-none mb-4">
               PURE<br/>FOCUS.
             </h2>
           </div>
@@ -64,7 +64,7 @@ export const Manifesto: React.FC = () => {
             className="border-t border-black pt-12"
           >
             <h3 className="font-mono text-xs uppercase tracking-widest mb-6 bg-black text-white w-fit px-2 py-1">The Sintax</h3>
-            <p className="text-3xl md:text-5xl font-bold leading-tight mb-8">
+            <p className="text-3xl md:text-5xl font-pixel-line font-bold leading-tight mb-8">
               We do not add.<br/>We subtract.
             </p>
             <p className="text-lg text-neutral-700 max-w-md">
