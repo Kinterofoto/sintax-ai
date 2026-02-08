@@ -265,7 +265,7 @@ export const Hero: React.FC = () => {
       // 8. IN THE bridge (faster)
       tl.fromTo(intheRef.current,
         { opacity: 0, letterSpacing: '1.5em' },
-        { opacity: 0.35, letterSpacing: '0.5em', duration: 0.4, ease: 'power2.out' },
+        { opacity: 0.7, letterSpacing: '0.5em', duration: 0.4, ease: 'power2.out' },
         '<0.1'
       );
 
@@ -355,7 +355,7 @@ export const Hero: React.FC = () => {
 
         <div className="flex items-center justify-center gap-3 md:gap-5 my-1 md:my-2">
           <span className="h-[1px] w-8 md:w-20 bg-white/15" />
-          <span ref={intheRef} className="text-[10px] md:text-xs text-white/30 tracking-[0.5em] uppercase">IN THE</span>
+          <span ref={intheRef} className="text-[10px] md:text-xs text-white/70 tracking-[0.5em] uppercase">IN THE</span>
           <span className="h-[1px] w-8 md:w-20 bg-white/15" />
         </div>
 

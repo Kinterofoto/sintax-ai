@@ -76,7 +76,7 @@ export const Navigation: React.FC = () => {
 
         {/* Top Left: Logo */}
         <div className="flex flex-col">
-          <a href="#" className="text-lg font-bold tracking-tighter font-sans leading-none">
+          <a href="#" className="text-lg font-bold tracking-tighter font-pixel-square leading-none">
             SINTAX.AI™
           </a>
           <span className="text-[10px] font-mono opacity-60">VER 2.5 // STABLE</span>
@@ -133,7 +133,7 @@ export const Navigation: React.FC = () => {
                     <a
                       href={link.href}
                       onClick={() => setIsOpen(false)}
-                      className="text-4xl md:text-8xl font-black tracking-tighter text-white hover:text-cement transition-colors duration-300 uppercase"
+                      className="text-4xl md:text-8xl font-pixel-grid font-black tracking-tighter text-white hover:text-cement transition-colors duration-300 uppercase"
                     >
                       <ScrambleText text={link.label} delay={0.3 + (i * 0.1)} isVisible={isOpen} />
                     </a>
@@ -152,7 +152,7 @@ export const Navigation: React.FC = () => {
                   target="_blank"
                   rel="noopener noreferrer"
                   onClick={() => setIsOpen(false)}
-                  className="group flex items-center gap-4 text-xl md:text-3xl font-mono text-cement hover:text-white transition-colors"
+                  className="group flex items-center gap-4 text-xl md:text-3xl font-pixel-line text-cement hover:text-white transition-colors"
                 >
                   <span className="w-8 h-[1px] bg-cement group-hover:bg-white transition-colors"></span>
                   <ScrambleText text="INITIATE_HANDSHAKE" delay={0.8} isVisible={isOpen} />
