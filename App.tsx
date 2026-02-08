@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { NoiseOverlay } from './components/NoiseOverlay';
 import { Navigation } from './components/Navigation';
 import { Hero } from './components/Hero';
+import { PixelTransition } from './components/PixelTransition';
 import { Manifesto } from './components/Manifesto';
 import { Services } from './components/Services';
 import { Plans } from './components/Plans';
@@ -31,6 +32,7 @@ const App: React.FC = () => {
 
         <main className="relative z-10">
           <Hero />
+          <PixelTransition />
           <Manifesto />
           <Services />
           <Plans />
