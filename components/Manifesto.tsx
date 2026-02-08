@@ -4,173 +4,185 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
 gsap.registerPlugin(ScrollTrigger);
 
-const NOISE_CHARS = '▓▒░█▀▄┃┣┫╋╬═║01<>{}[]!?#*';
+const NOISE = '▓▒░█▀▄┃┣┫╋╬═║01<>{}[]!?#*';
 
 export const Manifesto: React.FC = () => {
   const sectionRef = useRef<HTMLElement>(null);
-  const overlayRef = useRef<HTMLDivElement>(null);
-  const contentRef = useRef<HTMLDivElement>(null);
-  const hasPlayedRef = useRef(false);
-
-  // Terminal line refs
-  const termLine1 = useRef<HTMLDivElement>(null);
-  const termLine2 = useRef<HTMLDivElement>(null);
-  const termLine3 = useRef<HTMLDivElement>(null);
-  const termLine4 = useRef<HTMLDivElement>(null);
-  const termLine5 = useRef<HTMLDivElement>(null);
-  const termLine6 = useRef<HTMLDivElement>(null);
-  const termLine7 = useRef<HTMLDivElement>(null);
-  const termLine8 = useRef<HTMLDivElement>(null);
-  const termLine9 = useRef<HTMLDivElement>(null);
-  const termProgressFill = useRef<HTMLDivElement>(null);
-  const termProgressText = useRef<HTMLSpanElement>(null);
-  const termResult = useRef<HTMLDivElement>(null);
-  const termCursor = useRef<HTMLSpanElement>(null);
-  const glitchOverlay = useRef<HTMLDivElement>(null);
-
-  // Content animation refs
-  const leftColRef = useRef<HTMLDivElement>(null);
   const chapterRef = useRef<HTMLDivElement>(null);
   const titleRef = useRef<HTMLHeadingElement>(null);
   const figureRef = useRef<HTMLDivElement>(null);
+  const figureLabelRef = useRef<HTMLDivElement>(null);
   const block1Ref = useRef<HTMLDivElement>(null);
+  const block1Text = useRef<HTMLParagraphElement>(null);
   const block2Ref = useRef<HTMLDivElement>(null);
+  const block2Label = useRef<HTMLHeadingElement>(null);
+  const block2Text = useRef<HTMLParagraphElement>(null);
   const block3Ref = useRef<HTMLDivElement>(null);
+  const block3Label = useRef<HTMLHeadingElement>(null);
+  const block3Title = useRef<HTMLParagraphElement>(null);
+  const block3Text = useRef<HTMLParagraphElement>(null);
 
   useEffect(() => {
-    const section = sectionRef.current;
-    const overlay = overlayRef.current;
-    if (!section || !overlay) return;
-
     const ctx = gsap.context(() => {
 
-      // Helper: type text character by character
-      const typeTo = (el: HTMLElement, text: string, speed = 0.018) => {
-        return gsap.to({ p: 0 }, {
-          p: 1,
-          duration: text.length * speed,
-          ease: 'none',
-          onUpdate() {
-            const n = Math.floor(this.targets()[0].p * text.length);
-            el.textContent = text.slice(0, n);
-          },
-          onComplete() { el.textContent = text; },
-        });
-      };
-
-      // Helper: decode from noise to text
-      const decode = (el: HTMLElement, text: string, dur = 0.5) => {
-        return gsap.to({ p: 0 }, {
+      // === Helpers ===
+      const decode = (el: HTMLElement, finalText: string, dur = 0.7) => {
+        const tl = gsap.timeline();
+        tl.fromTo(el, { opacity: 0 }, { opacity: 1, duration: 0.1 });
+        tl.to({ p: 0 }, {
           p: 1,
           duration: dur,
           ease: 'power2.out',
           onUpdate() {
             const progress = this.targets()[0].p;
-            el.textContent = text.split('').map((c, i) => {
+            el.textContent = finalText.split('').map((c, i) => {
               if (c === ' ' || c === '\n') return c;
-              return progress > (i / text.length) + 0.15
+              return progress > (i / finalText.length) + 0.12
                 ? c
-                : NOISE_CHARS[Math.floor(Math.random() * NOISE_CHARS.length)];
+                : NOISE[Math.floor(Math.random() * NOISE.length)];
             }).join('');
           },
-          onComplete() { el.textContent = text; },
-        });
+          onComplete() { el.textContent = finalText; },
+        }, '<');
+        return tl;
       };
 
-      // Init: hide all terminal lines, hide content
-      const termLines = [termLine1, termLine2, termLine3, termLine4, termLine5, termLine6, termLine7, termLine8, termLine9, termResult];
-      termLines.forEach(ref => {
-        if (ref.current) gsap.set(ref.current, { opacity: 0, x: -5 });
-      });
-      gsap.set(termProgressFill.current, { scaleX: 0 });
-      gsap.set(termProgressText.current, { opacity: 0 });
-      gsap.set(glitchOverlay.current, { opacity: 0 });
+      const typeIn = (el: HTMLElement, text: string, speed = 0.012) => {
+        const tl = gsap.timeline();
+        tl.fromTo(el, { opacity: 0 }, { opacity: 1, duration: 0.05 });
+        tl.to({ p: 0 }, {
+          p: 1,
+          duration: text.length * speed,
+          ease: 'none',
+          onUpdate() {
+            const n = Math.floor(this.targets()[0].p * text.length);
+            el.textContent = text.slice(0, n) + (this.targets()[0].p < 1 ? '█' : '');
+          },
+          onComplete() { el.textContent = text; },
+        }, '<');
+        return tl;
+      };
 
-      // Hide content initially
-      gsap.set(contentRef.current, { opacity: 0 });
-      gsap.set([chapterRef.current, titleRef.current, figureRef.current], { opacity: 0, y: 20 });
-      gsap.set([block1Ref.current, block2Ref.current, block3Ref.current], { opacity: 0, y: 30 });
+      const glitchIn = (el: HTMLElement, dur = 0.4) => {
+        const tl = gsap.timeline();
+        tl.fromTo(el,
+          { opacity: 0, x: -8, skewX: -3 },
+          { opacity: 1, x: 0, skewX: 0, duration: dur, ease: 'power3.out' }
+        );
+        // Quick glitch flicker
+        tl.to(el, { opacity: 0.3, x: 2, duration: 0.04 }, `-=${dur * 0.5}`);
+        tl.to(el, { opacity: 1, x: 0, duration: 0.04 }, '>');
+        return tl;
+      };
 
-      // Blinking cursor
-      gsap.to(termCursor.current, { opacity: 0, duration: 0.5, repeat: -1, yoyo: true, ease: 'steps(1)' });
+      // === Init: hide everything ===
+      gsap.set([chapterRef.current, titleRef.current, figureRef.current], { opacity: 0 });
+      gsap.set([block1Ref.current, block2Ref.current, block3Ref.current], { opacity: 0 });
 
-      // ScrollTrigger
-      ScrollTrigger.create({
-        trigger: section,
-        start: 'top 80%',
-        once: true,
-        onEnter: () => {
-          if (hasPlayedRef.current) return;
-          hasPlayedRef.current = true;
-          runTerminalSequence();
+      // === Left column: Chapter + Title + Figure ===
+      const leftTl = gsap.timeline({
+        scrollTrigger: {
+          trigger: chapterRef.current,
+          start: 'top 85%',
+          once: true,
         },
       });
 
-      function runTerminalSequence() {
-        const tl = gsap.timeline();
+      // Chapter label types in
+      leftTl.add(() => {
+        gsap.set(chapterRef.current, { opacity: 1 });
+      });
+      const chapterLabel = chapterRef.current?.querySelector('span');
+      if (chapterLabel) {
+        const chapterText = chapterLabel.textContent || '';
+        chapterLabel.textContent = '';
+        leftTl.add(typeIn(chapterLabel, chapterText, 0.018), 0);
+      }
+      const chapterDot = chapterRef.current?.querySelector('div');
+      if (chapterDot) {
+        leftTl.fromTo(chapterDot, { scale: 0 }, { scale: 1, duration: 0.3, ease: 'back.out(3)' }, 0);
+      }
 
-        // Phase 1: Command input
-        tl.to(termLine1.current, { opacity: 1, x: 0, duration: 0.05 }, 0.2);
-        tl.add(typeTo(termLine1.current!.querySelector('.term-text') as HTMLElement, 'sintax:~$ focus --purge-chaos --mode=absolute', 0.016), 0.25);
+      // Title decodes from noise — store text, clear it, then decode
+      if (titleRef.current) {
+        const titleText = titleRef.current.textContent || '';
+        titleRef.current.textContent = '';
+        leftTl.add(() => { gsap.set(titleRef.current, { opacity: 1 }); }, '+=0.1');
+        leftTl.add(decode(titleRef.current, titleText, 0.8), '<');
+      }
 
-        // Phase 2: Scanning
-        tl.to(termLine2.current, { opacity: 1, x: 0, duration: 0.05 }, '+=0.15');
-        tl.add(typeTo(termLine2.current!.querySelector('.term-text') as HTMLElement, 'Initializing focus protocol...', 0.014), '<');
+      // Figure slides up
+      if (figureRef.current) {
+        leftTl.fromTo(figureRef.current,
+          { opacity: 0, y: 30 },
+          { opacity: 1, y: 0, duration: 0.6, ease: 'power2.out' },
+          '-=0.3'
+        );
+        if (figureLabelRef.current) {
+          const figText = figureLabelRef.current.textContent || '';
+          figureLabelRef.current.textContent = '';
+          leftTl.add(typeIn(figureLabelRef.current, figText, 0.02), '-=0.2');
+        }
+      }
 
-        // Phase 3: Progress bar
-        tl.to(termProgressText.current, { opacity: 1, duration: 0.1 }, '+=0.08');
-        tl.to(termProgressFill.current, { scaleX: 1, duration: 0.7, ease: 'power1.inOut' }, '<');
+      // === Block 1: Big quote ===
+      if (block1Ref.current && block1Text.current) {
+        const b1Text = block1Text.current.textContent || '';
+        block1Text.current.textContent = '';
 
-        // Phase 4: Noise items detected & eliminated
-        const noiseItems = [
-          { ref: termLine3, text: '  [×] spreadsheets_manual ........... PURGED' },
-          { ref: termLine4, text: '  [×] email_overload ................ PURGED' },
-          { ref: termLine5, text: '  [×] repetitive_data_entry ......... PURGED' },
-          { ref: termLine6, text: '  [×] cognitive_overhead ............ PURGED' },
-          { ref: termLine7, text: '  [×] low_bandwidth_tasks ........... PURGED' },
-        ];
-
-        noiseItems.forEach((item, i) => {
-          tl.to(item.ref.current, { opacity: 1, x: 0, duration: 0.04 }, `+=0.06`);
-          tl.add(typeTo(item.ref.current!.querySelector('.term-text') as HTMLElement, item.text, 0.008), '<');
-        });
-
-        // Phase 5: Summary line
-        tl.to(termLine8.current, { opacity: 1, x: 0, duration: 0.05 }, '+=0.1');
-        tl.add(typeTo(termLine8.current!.querySelector('.term-text') as HTMLElement, '5 noise sources eliminated. System clean.', 0.014), '<');
-
-        // Phase 6: Final output
-        tl.to(termLine9.current, { opacity: 1, x: 0, duration: 0.05 }, '+=0.08');
-        tl.add(typeTo(termLine9.current!.querySelector('.term-text') as HTMLElement, '> Only signal remains. Entering PURE FOCUS...', 0.012), '<');
-
-        // Phase 7: Result - big decoded text
-        tl.to(termResult.current, { opacity: 1, x: 0, duration: 0.1 }, '+=0.15');
-        tl.add(decode(termResult.current!.querySelector('.term-decode') as HTMLElement, 'PURE FOCUS ACTIVATED', 0.6), '<');
-
-        // Phase 8: Glitch burst + overlay dissolve
-        tl.to(glitchOverlay.current, { opacity: 1, duration: 0.05 }, '+=0.3');
-        tl.to(glitchOverlay.current, { opacity: 0, duration: 0.05 }, '+=0.05');
-        tl.to(glitchOverlay.current, { opacity: 0.8, duration: 0.04 }, '+=0.03');
-        tl.to(glitchOverlay.current, { opacity: 0, duration: 0.04 }, '+=0.04');
-
-        // Phase 9: Terminal overlay dissolves
-        tl.to(overlayRef.current, {
-          opacity: 0,
-          duration: 0.5,
-          ease: 'power2.inOut',
-          onComplete() {
-            if (overlayRef.current) overlayRef.current.style.pointerEvents = 'none';
+        const b1Tl = gsap.timeline({
+          scrollTrigger: {
+            trigger: block1Ref.current,
+            start: 'top 80%',
+            once: true,
           },
-        }, '+=0.05');
+        });
+        b1Tl.add(() => { gsap.set(block1Ref.current, { opacity: 1 }); });
+        b1Tl.add(glitchIn(block1Ref.current!, 0.5), 0);
+        b1Tl.add(decode(block1Text.current, b1Text, 1.0), 0.1);
+      }
 
-        // Phase 10: Content reveals
-        tl.to(contentRef.current, { opacity: 1, duration: 0.3 }, '-=0.3');
-        tl.to(chapterRef.current, { opacity: 1, y: 0, duration: 0.4 }, '-=0.15');
-        tl.to(titleRef.current, { opacity: 1, y: 0, duration: 0.5, ease: 'power2.out' }, '-=0.2');
-        tl.to(figureRef.current, { opacity: 1, y: 0, duration: 0.5 }, '-=0.3');
-        tl.to(block1Ref.current, { opacity: 1, y: 0, duration: 0.5 }, '-=0.2');
-        tl.to(block2Ref.current, { opacity: 1, y: 0, duration: 0.5 }, '-=0.3');
-        tl.to(block3Ref.current, { opacity: 1, y: 0, duration: 0.5 }, '-=0.3');
+      // === Block 2: The Problem ===
+      if (block2Ref.current && block2Label.current && block2Text.current) {
+        const b2LabelText = block2Label.current.textContent || '';
+        const b2BodyText = block2Text.current.textContent || '';
+        block2Label.current.textContent = '';
+        block2Text.current.textContent = '';
+
+        const b2Tl = gsap.timeline({
+          scrollTrigger: {
+            trigger: block2Ref.current,
+            start: 'top 80%',
+            once: true,
+          },
+        });
+        b2Tl.add(() => { gsap.set(block2Ref.current, { opacity: 1 }); });
+        b2Tl.add(glitchIn(block2Ref.current!, 0.4), 0);
+        b2Tl.add(typeIn(block2Label.current, b2LabelText, 0.025), 0.1);
+        b2Tl.add(decode(block2Text.current, b2BodyText, 1.2), 0.3);
+      }
+
+      // === Block 3: The Sintax ===
+      if (block3Ref.current && block3Label.current && block3Title.current && block3Text.current) {
+        const b3LabelText = block3Label.current.textContent || '';
+        const b3TitleText = block3Title.current.textContent || '';
+        const b3BodyText = block3Text.current.textContent || '';
+        block3Label.current.textContent = '';
+        block3Title.current.textContent = '';
+        block3Text.current.textContent = '';
+
+        const b3Tl = gsap.timeline({
+          scrollTrigger: {
+            trigger: block3Ref.current,
+            start: 'top 80%',
+            once: true,
+          },
+        });
+        b3Tl.add(() => { gsap.set(block3Ref.current, { opacity: 1 }); });
+        b3Tl.add(glitchIn(block3Ref.current!, 0.4), 0);
+        b3Tl.add(typeIn(block3Label.current, b3LabelText, 0.025), 0.1);
+        b3Tl.add(decode(block3Title.current, b3TitleText, 0.8), 0.3);
+        b3Tl.add(decode(block3Text.current, b3BodyText, 1.0), 0.6);
       }
 
     }, sectionRef);
@@ -180,93 +192,17 @@ export const Manifesto: React.FC = () => {
 
   return (
     <section ref={sectionRef} id="manifesto" className="relative bg-white text-black border-b border-black">
-
-      {/* ===== TERMINAL OVERLAY ===== */}
-      <div
-        ref={overlayRef}
-        className="absolute inset-0 z-30 bg-[#050505] flex items-center justify-center overflow-hidden"
-      >
-        {/* Scanlines */}
-        <div className="absolute inset-0 pointer-events-none opacity-[0.04]" style={{
-          backgroundImage: 'repeating-linear-gradient(0deg, transparent, transparent 1px, rgba(0,0,0,0.4) 1px, rgba(0,0,0,0.4) 2px)',
-          backgroundSize: '100% 2px',
-        }} />
-
-        {/* Vignette */}
-        <div className="absolute inset-0 pointer-events-none" style={{
-          background: 'radial-gradient(ellipse at center, transparent 40%, rgba(0,0,0,0.6) 100%)',
-        }} />
-
-        {/* Glitch flash */}
-        <div ref={glitchOverlay} className="absolute inset-0 z-10 pointer-events-none bg-white mix-blend-difference" />
-
-        {/* Terminal content */}
-        <div className="relative z-20 w-full max-w-3xl px-6 md:px-12 font-mono text-[10px] md:text-xs space-y-1.5">
-
-          <div ref={termLine1} className="flex items-center gap-1 text-white/80">
-            <span className="term-text"></span>
-            <span ref={termCursor} className="text-white text-[11px]">█</span>
-          </div>
-
-          <div ref={termLine2} className="text-white/50">
-            <span className="term-text"></span>
-          </div>
-
-          {/* Progress bar */}
-          <div className="flex items-center gap-3 py-1">
-            <div className="w-48 md:w-72 h-[3px] bg-white/10 overflow-hidden">
-              <div ref={termProgressFill} className="h-full bg-white/70 origin-left" />
-            </div>
-            <span ref={termProgressText} className="text-white/40 text-[9px]">SCANNING COMPLETE</span>
-          </div>
-
-          {/* Noise items being purged */}
-          <div ref={termLine3} className="text-red-400/70">
-            <span className="term-text"></span>
-          </div>
-          <div ref={termLine4} className="text-red-400/70">
-            <span className="term-text"></span>
-          </div>
-          <div ref={termLine5} className="text-red-400/70">
-            <span className="term-text"></span>
-          </div>
-          <div ref={termLine6} className="text-red-400/70">
-            <span className="term-text"></span>
-          </div>
-          <div ref={termLine7} className="text-red-400/70">
-            <span className="term-text"></span>
-          </div>
-
-          {/* Summary */}
-          <div ref={termLine8} className="text-white/60 pt-2">
-            <span className="term-text"></span>
-          </div>
-
-          {/* Final line */}
-          <div ref={termLine9} className="text-white/40">
-            <span className="term-text"></span>
-          </div>
-
-          {/* Big decoded result */}
-          <div ref={termResult} className="pt-6">
-            <span className="term-decode text-2xl md:text-4xl font-pixel-triangle font-bold text-white tracking-tighter"></span>
-          </div>
-
-        </div>
-      </div>
-
-      {/* ===== ACTUAL CONTENT ===== */}
-      <div ref={contentRef} className="grid grid-cols-1 lg:grid-cols-2">
+      <div className="grid grid-cols-1 lg:grid-cols-2">
 
         {/* Left Column: Sticky Title */}
-        <div ref={leftColRef} className="lg:sticky lg:top-0 lg:h-screen p-8 md:p-16 border-b lg:border-b-0 lg:border-r border-black flex flex-col justify-between">
+        <div className="lg:sticky lg:top-0 lg:h-screen p-8 md:p-16 border-b lg:border-b-0 lg:border-r border-black flex flex-col justify-between">
           <div>
             <div ref={chapterRef} className="flex items-center gap-2 mb-8">
               <div className="w-2 h-2 bg-black"></div>
               <span className="font-mono text-xs uppercase tracking-widest">Chapter 01: Core Belief</span>
             </div>
             <h2 ref={titleRef} className="text-6xl md:text-8xl font-pixel-triangle font-bold tracking-tighter leading-none mb-4">
-              PURE<br/>FOCUS.
+              PURE FOCUS.
             </h2>
           </div>
 
@@ -276,7 +212,7 @@ export const Manifesto: React.FC = () => {
                 <line x1="100%" y1="0" x2="0" y2="100%" stroke="black" strokeWidth="1" />
                 <circle cx="50%" cy="50%" r="25%" fill="none" stroke="black" strokeWidth="1" />
              </svg>
-             <div className="absolute inset-0 flex items-center justify-center font-mono text-xs bg-white/80 w-fit h-fit m-auto px-2">
+             <div ref={figureLabelRef} className="absolute inset-0 flex items-center justify-center font-mono text-xs bg-white/80 w-fit h-fit m-auto px-2">
                FIG 1.1: ELIMINATION
              </div>
           </div>
@@ -287,24 +223,24 @@ export const Manifesto: React.FC = () => {
 
           <div ref={block1Ref} className="relative">
             <div className="absolute -left-4 top-0 bottom-0 w-1 bg-black/10"></div>
-            <p className="text-2xl md:text-4xl font-light leading-tight">
+            <p ref={block1Text} className="text-2xl md:text-4xl font-light leading-tight">
               Chaos is the default state of the universe. Without intervention, entropy consumes efficiency.
             </p>
           </div>
 
           <div ref={block2Ref}>
-            <h3 className="font-mono text-xs uppercase tracking-widest mb-6 bg-black text-white w-fit px-2 py-1">The Problem</h3>
-            <p className="text-xl text-neutral-600 leading-relaxed font-mono">
+            <h3 ref={block2Label} className="font-mono text-xs uppercase tracking-widest mb-6 bg-black text-white w-fit px-2 py-1">The Problem</h3>
+            <p ref={block2Text} className="text-xl text-neutral-600 leading-relaxed font-mono">
               You are drowning in low-bandwidth tasks. Spreadsheets, emails, manual data entry. This is the noise. It masks the signal. It kills creativity.
             </p>
           </div>
 
           <div ref={block3Ref} className="border-t border-black pt-12">
-            <h3 className="font-mono text-xs uppercase tracking-widest mb-6 bg-black text-white w-fit px-2 py-1">The Sintax</h3>
-            <p className="text-3xl md:text-5xl font-pixel-line font-bold leading-tight mb-8">
-              We do not add.<br/>We subtract.
+            <h3 ref={block3Label} className="font-mono text-xs uppercase tracking-widest mb-6 bg-black text-white w-fit px-2 py-1">The Sintax</h3>
+            <p ref={block3Title} className="text-3xl md:text-5xl font-pixel-line font-bold leading-tight mb-8">
+              We do not add. We subtract.
             </p>
-            <p className="text-lg text-neutral-700 max-w-md">
+            <p ref={block3Text} className="text-lg text-neutral-700 max-w-md">
               We remove the friction. We automate the mundane. We leave you with only what matters: Vision and Strategy.
             </p>
           </div>
