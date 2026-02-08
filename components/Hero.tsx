@@ -116,9 +116,7 @@ const CharMatrix: React.FC = () => {
 
           if (cell.opacity < 0.01) continue;
 
-          // Color: white with some green tint for closer chars
-          const greenBoost = dist < HOVER_RADIUS * 0.4 ? 20 : 0;
-          ctx.fillStyle = `rgba(${240 - greenBoost}, ${240 + greenBoost}, ${240 - greenBoost}, ${cell.opacity})`;
+          ctx.fillStyle = `rgba(240, 240, 240, ${cell.opacity})`;
           ctx.fillText(cell.char, cx, cy);
         }
       }
