@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
@@ -10,7 +10,7 @@ export const Manifesto: React.FC = () => {
   const sectionRef = useRef<HTMLElement>(null);
   const overlayRef = useRef<HTMLDivElement>(null);
   const contentRef = useRef<HTMLDivElement>(null);
-  const [hasPlayed, setHasPlayed] = useState(false);
+  const hasPlayedRef = useRef(false);
 
   // Terminal line refs
   const termLine1 = useRef<HTMLDivElement>(null);
@@ -100,8 +100,8 @@ export const Manifesto: React.FC = () => {
         start: 'top 80%',
         once: true,
         onEnter: () => {
-          if (hasPlayed) return;
-          setHasPlayed(true);
+          if (hasPlayedRef.current) return;
+          hasPlayedRef.current = true;
           runTerminalSequence();
         },
       });
@@ -176,7 +176,7 @@ export const Manifesto: React.FC = () => {
     }, sectionRef);
 
     return () => ctx.revert();
-  }, [hasPlayed]);
+  }, []);
 
   return (
     <section ref={sectionRef} id="manifesto" className="relative bg-white text-black border-b border-black">
