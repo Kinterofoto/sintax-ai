@@ -1,5 +1,150 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useCallback } from 'react';
 import gsap from 'gsap';
+
+const MATRIX_CHARS = ['+', '×', '0', '1', ':', '.', '■', '●', '○', '□', '<', '>', '{', '}', '/', '\\', '|', '-', '=', '*', '#', '&', '%', '@', '!', '?'];
+const GLITCH_CHARS = ['▓', '▒', '░', '█', '▀', '▄', '┃', '╋', '╬', '═', '║'];
+
+const CharMatrix: React.FC = () => {
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+  const mouseRef = useRef({ x: -1000, y: -1000 });
+  const gridRef = useRef<{ char: string; baseChar: string; opacity: number; glitchTimer: number; }[]>([]);
+  const dimsRef = useRef({ cols: 0, rows: 0, cellW: 0, cellH: 0 });
+  const rafRef = useRef<number>(0);
+
+  const handleMouseMove = useCallback((e: MouseEvent) => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    const rect = canvas.getBoundingClientRect();
+    mouseRef.current = {
+      x: e.clientX - rect.left,
+      y: e.clientY - rect.top,
+    };
+  }, []);
+
+  const handleMouseLeave = useCallback(() => {
+    mouseRef.current = { x: -1000, y: -1000 };
+  }, []);
+
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return;
+
+    const CELL_SIZE = 20;
+    const HOVER_RADIUS = 180;
+    const FADE_SPEED = 0.06;
+    const GLITCH_CHANCE = 0.08;
+
+    const resize = () => {
+      const dpr = window.devicePixelRatio || 1;
+      const w = canvas.parentElement?.clientWidth || window.innerWidth;
+      const h = canvas.parentElement?.clientHeight || window.innerHeight;
+      canvas.width = w * dpr;
+      canvas.height = h * dpr;
+      canvas.style.width = w + 'px';
+      canvas.style.height = h + 'px';
+      ctx.scale(dpr, dpr);
+
+      const cols = Math.ceil(w / CELL_SIZE);
+      const rows = Math.ceil(h / CELL_SIZE);
+      dimsRef.current = { cols, rows, cellW: CELL_SIZE, cellH: CELL_SIZE };
+
+      // Init grid
+      const grid: typeof gridRef.current = [];
+      for (let i = 0; i < cols * rows; i++) {
+        const baseChar = MATRIX_CHARS[Math.floor(Math.random() * MATRIX_CHARS.length)];
+        grid.push({ char: baseChar, baseChar, opacity: 0, glitchTimer: 0 });
+      }
+      gridRef.current = grid;
+    };
+
+    resize();
+    window.addEventListener('resize', resize);
+
+    // Listen on the section (grandparent) so pointer-events-none on canvas doesn't matter
+    const section = canvas.closest('section');
+    if (section) {
+      section.addEventListener('mousemove', handleMouseMove);
+      section.addEventListener('mouseleave', handleMouseLeave);
+    }
+
+    const render = () => {
+      const { cols, rows, cellW, cellH } = dimsRef.current;
+      const w = canvas.width / (window.devicePixelRatio || 1);
+      const h = canvas.height / (window.devicePixelRatio || 1);
+      const mx = mouseRef.current.x;
+      const my = mouseRef.current.y;
+
+      ctx.clearRect(0, 0, w, h);
+      ctx.font = '11px "Geist Mono", monospace';
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'middle';
+
+      for (let row = 0; row < rows; row++) {
+        for (let col = 0; col < cols; col++) {
+          const idx = row * cols + col;
+          const cell = gridRef.current[idx];
+          if (!cell) continue;
+
+          const cx = col * cellW + cellW / 2;
+          const cy = row * cellH + cellH / 2;
+          const dist = Math.sqrt((cx - mx) ** 2 + (cy - my) ** 2);
+
+          // Target opacity based on distance from mouse
+          const targetOpacity = dist < HOVER_RADIUS
+            ? Math.max(0, 1 - (dist / HOVER_RADIUS)) * 0.7
+            : 0;
+
+          // Smooth fade in/out
+          cell.opacity += (targetOpacity - cell.opacity) * FADE_SPEED;
+
+          // Glitch effect for visible cells
+          if (cell.opacity > 0.05) {
+            cell.glitchTimer += 1;
+            if (Math.random() < GLITCH_CHANCE * cell.opacity) {
+              cell.char = Math.random() < 0.3
+                ? GLITCH_CHARS[Math.floor(Math.random() * GLITCH_CHARS.length)]
+                : MATRIX_CHARS[Math.floor(Math.random() * MATRIX_CHARS.length)];
+            } else if (cell.glitchTimer % 30 === 0) {
+              cell.char = cell.baseChar;
+            }
+          } else {
+            cell.char = cell.baseChar;
+            cell.glitchTimer = 0;
+          }
+
+          if (cell.opacity < 0.01) continue;
+
+          // Color: white with some green tint for closer chars
+          const greenBoost = dist < HOVER_RADIUS * 0.4 ? 20 : 0;
+          ctx.fillStyle = `rgba(${240 - greenBoost}, ${240 + greenBoost}, ${240 - greenBoost}, ${cell.opacity})`;
+          ctx.fillText(cell.char, cx, cy);
+        }
+      }
+
+      rafRef.current = requestAnimationFrame(render);
+    };
+
+    rafRef.current = requestAnimationFrame(render);
+
+    return () => {
+      cancelAnimationFrame(rafRef.current);
+      window.removeEventListener('resize', resize);
+      if (section) {
+        section.removeEventListener('mousemove', handleMouseMove);
+        section.removeEventListener('mouseleave', handleMouseLeave);
+      }
+    };
+  }, [handleMouseMove, handleMouseLeave]);
+
+  return (
+    <canvas
+      ref={canvasRef}
+      className="absolute inset-0 z-[1] pointer-events-none"
+    />
+  );
+};
 
 const ScrollingData: React.FC = () => {
   const ref = useRef<HTMLDivElement>(null);
@@ -138,7 +283,10 @@ export const Hero: React.FC = () => {
   }, []);
 
   return (
-    <section ref={containerRef} className="relative min-h-[100dvh] flex flex-col justify-center items-center overflow-hidden font-mono px-4 md:px-12">
+    <section ref={containerRef} className="relative min-h-[100dvh] flex flex-col justify-center items-center overflow-hidden font-mono px-4 md:px-12" style={{ cursor: 'crosshair' }}>
+
+      {/* Interactive character matrix background */}
+      <CharMatrix />
 
       {/* CRT scanlines — scoped to hero only */}
       <div className="pointer-events-none absolute inset-0 z-20 opacity-[0.035]" style={{
