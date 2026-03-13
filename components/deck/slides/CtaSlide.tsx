@@ -42,9 +42,6 @@ export const CtaSlide: React.FC<SlideProps> = ({ isActive }) => {
           Tus competidores se están volviendo extremadamente eficientes con AI —
           <span className="text-white/70"> y no vas a entender la razón.</span>
         </p>
-        <p className="font-mono text-xs text-white/20 mt-2">
-          84% de desarrolladores ya usan herramientas AI. El mercado de AI agents crece a <span className="text-white/40">46% anual</span>.
-        </p>
       </div>
 
       <div ref={(el: HTMLDivElement | null) => { elementsRef.current[3] = el; }} className="mt-10 md:mt-14 opacity-0">

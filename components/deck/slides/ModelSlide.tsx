@@ -105,9 +105,9 @@ export const ModelSlide: React.FC<SlideProps> = ({ isActive }) => {
                 <span className="font-mono text-[9px] text-white/40">{item.bench} <span className="text-white/15">({item.sub})</span></span>
                 <span className="font-mono text-[9px] text-white/60">{item.label}</span>
               </div>
-              <div className="flex-1 h-[6px] bg-white/5 overflow-hidden relative">
-                <div className="absolute h-full bg-red-400/20" style={{ width: `${item.before}%` }} />
-                <div className="absolute h-full bg-white/60" style={{ width: `${item.after}%` }} />
+              <div className="flex-1 h-[8px] bg-white/[0.03] overflow-hidden relative">
+                <div className="absolute h-full bg-red-400/40" style={{ width: `${item.before}%` }} />
+                <div className="absolute h-full bg-white" style={{ width: `${item.after}%`, opacity: 0.85 }} />
               </div>
             </div>
           ))}
