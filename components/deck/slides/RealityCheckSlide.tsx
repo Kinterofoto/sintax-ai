@@ -56,9 +56,9 @@ export const RealityCheckSlide: React.FC<SlideProps> = ({ isActive }) => {
             <span className="font-mono text-[10px] text-white/20 block mt-1">MESES PARA ARMAR EQUIPO</span>
           </div>
           <div className="border border-white/10 p-4">
-            <span className="font-mono text-[10px] text-white/30 tracking-widest block mb-2">ADOPCIÓN_AI</span>
-            <span className="font-pixel-square text-2xl md:text-3xl text-white/60">78%</span>
-            <span className="font-mono text-[10px] text-white/20 block mt-1">DE EMPRESAS YA USAN AI</span>
+            <span className="font-mono text-[10px] text-white/30 tracking-widest block mb-2">BRECHA_AI</span>
+            <span className="font-pixel-square text-2xl md:text-3xl text-white/60">3×</span>
+            <span className="font-mono text-[10px] text-white/20 block mt-1">MÁS ADOPCIÓN EN GRANDES vs PYMES</span>
           </div>
         </div>
       </div>
