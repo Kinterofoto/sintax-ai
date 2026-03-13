@@ -82,33 +82,30 @@ export const ModelSlide: React.FC<SlideProps> = ({ isActive }) => {
         </div>
       </div>
 
-      {/* Benchmark evolution */}
+      {/* Benchmark evolution — dramatic jumps */}
       <div ref={(el: HTMLDivElement | null) => { elementsRef.current[3] = el; }} className="mt-8 opacity-0">
-        <span className="font-mono text-[10px] text-white/20 tracking-widest block mb-3">BENCHMARKS_MMLU — SUPERANDO HUMANOS</span>
-        <div className="space-y-2">
+        <span className="font-mono text-[10px] text-white/20 tracking-widest block mb-3">CAPACIDAD_AI — SALTO EN 2 AÑOS</span>
+        <div className="space-y-3">
           {[
-            { model: 'GPT-3.5', score: 70, year: '2023' },
-            { model: 'GPT-4', score: 86, year: '2023' },
-            { model: 'Claude 3.5', score: 88, year: '2024' },
-            { model: 'Frontier 2025', score: 93, year: '2025' },
+            { bench: 'CÓDIGO REAL', sub: 'SWE-bench', before: 4, after: 81, label: '4% → 81%' },
+            { bench: 'RAZONAMIENTO', sub: 'ARC-AGI', before: 2, after: 88, label: '2% → 88%' },
+            { bench: 'CIENCIA PhD', sub: 'GPQA Diamond', before: 39, after: 94, label: '39% → 94%' },
           ].map((item, i) => (
-            <div key={i} className="flex items-center gap-3">
-              <span className="font-mono text-[9px] text-white/30 w-24 shrink-0">{item.model}</span>
-              <div className="flex-1 h-[3px] bg-white/5 overflow-hidden">
-                <div
-                  className={`h-full ${item.score >= 89 ? 'bg-green-400/50' : 'bg-white/25'} transition-all duration-1000`}
-                  style={{ width: `${item.score}%` }}
-                />
+            <div key={i}>
+              <div className="flex items-center justify-between mb-1">
+                <span className="font-mono text-[9px] text-white/40">{item.bench} <span className="text-white/15">({item.sub})</span></span>
+                <span className="font-mono text-[9px] text-green-400/50">{item.label}</span>
               </div>
-              <span className="font-mono text-[9px] text-white/30 w-8">{item.score}%</span>
+              <div className="flex-1 h-[6px] bg-white/5 overflow-hidden relative">
+                <div className="absolute h-full bg-white/10" style={{ width: `${item.before}%` }} />
+                <div className="absolute h-full bg-green-400/40" style={{ width: `${item.after}%` }} />
+              </div>
             </div>
           ))}
-          <div className="flex items-center gap-3">
-            <span className="font-mono text-[9px] text-white/40 w-24 shrink-0">HUMANO</span>
-            <div className="flex-1 h-[1px] border-t border-dashed border-white/15" />
-            <span className="font-mono text-[9px] text-white/40 w-8">89.8%</span>
-          </div>
         </div>
+        <p className="font-mono text-[9px] text-white/15 mt-3">
+          Expertos humanos en GPQA: 70% — los modelos ya los superan. Bar Exam: de percentil 10 a percentil 90.
+        </p>
       </div>
 
       {/* The punchline */}
