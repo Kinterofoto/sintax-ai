@@ -51,7 +51,9 @@ export const ModelSlide: React.FC<SlideProps> = ({ isActive }) => {
 
       <div ref={(el: HTMLDivElement | null) => { elementsRef.current[1] = el; }} className="mt-6 opacity-0">
         <h2 className="text-[8vw] md:text-[5vw] font-pixel-square font-bold leading-[0.9] tracking-tight text-white uppercase">
-          <GlitchText text="EVERYONE WINS" trigger={isActive} className="text-inherit font-inherit" />
+          <GlitchText text="COMPOUNDING" trigger={isActive} className="text-inherit font-inherit" />
+          <br />
+          <GlitchText text="RETURNS" trigger={isActive} className="text-inherit font-inherit" />
         </h2>
       </div>
 
@@ -103,11 +105,17 @@ export const ModelSlide: React.FC<SlideProps> = ({ isActive }) => {
         </div>
       </div>
 
-      {/* The punchline */}
+      {/* Compound interest of tech */}
       <div ref={(el: HTMLDivElement | null) => { elementsRef.current[4] = el; }} className="mt-10 opacity-0">
-        <p className="font-mono text-xs md:text-sm text-white/50 leading-relaxed">
-          Los modelos mejoran exponencialmente — <span className="text-white/80">con el mismo precio, recibes MÁS.</span>
-        </p>
+        <div className="border-l border-white/10 pl-4 md:pl-6">
+          <p className="font-mono text-xs md:text-sm text-white/50 leading-relaxed">
+            La tecnología es interés compuesto — más datos, más stack, más automatización
+            <span className="text-white/80"> = más oportunidades cada mes.</span>
+          </p>
+          <p className="font-mono text-[10px] text-white/25 mt-2">
+            Y los modelos mejoran solos. Con el mismo precio, siempre recibes más.
+          </p>
+        </div>
       </div>
     </div>
   );
