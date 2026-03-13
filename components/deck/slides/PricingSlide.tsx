@@ -69,9 +69,14 @@ export const PricingSlide: React.FC<SlideProps> = ({ isActive }) => {
         </div>
       </div>
 
-      <div ref={(el: HTMLDivElement | null) => { elementsRef.current[4] = el; }} className="mt-6 opacity-0">
-        <p className="font-mono text-xs text-white/20">
-          <span className="text-white/30">// </span>La revolución de AI agents está en código — el cobro se liga a horas, no a lo que se construye.
+      <div ref={(el: HTMLDivElement | null) => { elementsRef.current[4] = el; }} className="mt-8 opacity-0">
+        <div className="flex items-baseline gap-4">
+          <span className="font-pixel-square text-3xl md:text-4xl text-white font-bold">$8M</span>
+          <span className="font-mono text-xs text-white/30">/MES</span>
+          <span className="font-mono text-[10px] text-white/15">COP</span>
+        </div>
+        <p className="font-mono text-[10px] text-white/25 mt-2">
+          Entregas útiles cada semana. Sin sorpresas.
         </p>
       </div>
     </div>
