@@ -30,9 +30,9 @@ export const FailedSolutionsSlide: React.FC<SlideProps> = ({ isActive }) => {
 
       <div ref={(el: HTMLDivElement | null) => { elementsRef.current[1] = el; }} className="mt-6 opacity-0">
         <h2 className="text-[7vw] md:text-[4.5vw] font-pixel-square font-bold leading-[0.9] tracking-tight text-white uppercase">
-          <GlitchText text="THE ONE-SIZE" trigger={isActive} className="text-inherit font-inherit" />
+          <GlitchText text="BUILT FOR" trigger={isActive} className="text-inherit font-inherit" />
           <br />
-          <GlitchText text="FITS-NONE TRAP" trigger={isActive} className="text-inherit font-inherit" />
+          <GlitchText text="NO ONE" trigger={isActive} className="text-inherit font-inherit" />
         </h2>
       </div>
 
