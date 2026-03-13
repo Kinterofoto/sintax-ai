@@ -109,8 +109,8 @@ export const ModelSlide: React.FC<SlideProps> = ({ isActive }) => {
       <div ref={(el: HTMLDivElement | null) => { elementsRef.current[4] = el; }} className="mt-10 opacity-0">
         <div className="border-l border-white/10 pl-4 md:pl-6">
           <p className="font-mono text-xs md:text-sm text-white/50 leading-relaxed">
-            La tecnología es interés compuesto — más datos, más stack, más automatización
-            <span className="text-white/80"> = más oportunidades cada mes.</span>
+            Cada pieza de tecnología desbloquea la siguiente.
+            <span className="text-white/80"> El crecimiento se acelera, no se frena.</span>
           </p>
           <p className="font-mono text-[10px] text-white/25 mt-2">
             Y los modelos mejoran solos. Con el mismo precio, siempre recibes más.
