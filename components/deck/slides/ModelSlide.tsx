@@ -20,20 +20,20 @@ export const ModelSlide: React.FC<SlideProps> = ({ isActive }) => {
         { opacity: 1, y: 0, duration: 0.7, stagger: 0.18, ease: 'power3.out', delay: 0.2 }
       );
 
-      // Animated cost counter: $30 → $1
+      // Animated cost counter: $30 → $0.15
       if (costRef.current) {
         gsap.fromTo(
           { val: 30 },
           { val: 30 },
           {
-            val: 1,
+            val: 0.15,
             duration: 2.5,
             delay: 1.2,
             ease: 'power2.inOut',
             onUpdate() {
               if (costRef.current) {
-                const v = Math.round(this.targets()[0].val);
-                costRef.current.textContent = `$${v}`;
+                const v = this.targets()[0].val;
+                costRef.current.textContent = v >= 1 ? `$${Math.round(v)}` : `$${v.toFixed(2)}`;
               }
             },
           }
@@ -55,30 +55,39 @@ export const ModelSlide: React.FC<SlideProps> = ({ isActive }) => {
         </h2>
       </div>
 
-      {/* AI Evolution Data */}
+      {/* AI Evolution Data — token cost table */}
       <div ref={(el: HTMLDivElement | null) => { elementsRef.current[2] = el; }} className="mt-8 md:mt-10 opacity-0">
-        <span className="font-mono text-[10px] text-white/20 tracking-widest block mb-4">EVOLUCIÓN_AI — COSTO POR MILLÓN DE TOKENS</span>
-        <div className="flex items-end gap-2 md:gap-3 h-32 md:h-40">
+        <span className="font-mono text-[10px] text-white/20 tracking-widest block mb-4">COSTO POR MILLÓN DE TOKENS (INPUT) — RENDIMIENTO NIVEL GPT-4</span>
+        <div className="space-y-1.5">
           {[
-            { year: '2023', cost: '$30', height: '100%', color: 'bg-white/20' },
-            { year: '2024', cost: '$4', height: '13%', color: 'bg-white/30' },
-            { year: '2024.5', cost: '$0.70', height: '2.3%', color: 'bg-white/40' },
-            { year: '2025', cost: '<$1', height: '3%', color: 'bg-green-400/40' },
+            { model: 'GPT-4', year: '2023', cost: 30, label: '$30.00', note: 'Lanzamiento' },
+            { model: 'Claude 3.5 Sonnet', year: '2024', cost: 3, label: '$3.00', note: '' },
+            { model: 'GPT-4o', year: '2024', cost: 2.5, label: '$2.50', note: '' },
+            { model: 'DeepSeek V3', year: '2025', cost: 0.28, label: '$0.28', note: 'China' },
+            { model: 'GPT-4o mini', year: '2024', cost: 0.15, label: '$0.15', note: '' },
+            { model: 'Gemini Flash', year: '2025', cost: 0.15, label: '$0.15', note: 'Google' },
           ].map((item, i) => (
-            <div key={i} className="flex-1 flex flex-col items-center justify-end h-full">
-              <span className="font-mono text-[9px] text-white/40 mb-1">{item.cost}</span>
-              <div className={`w-full ${item.color} transition-all duration-500`} style={{ height: item.height, minHeight: '4px' }} />
-              <span className="font-mono text-[8px] text-white/20 mt-1">{item.year}</span>
+            <div key={i} className="flex items-center gap-3">
+              <span className="font-mono text-[9px] text-white/30 w-32 md:w-36 shrink-0 truncate">{item.model}</span>
+              <div className="flex-1 h-[6px] bg-white/5 overflow-hidden">
+                <div
+                  className="h-full bg-white/40"
+                  style={{ width: `${Math.max((item.cost / 30) * 100, 1.5)}%` }}
+                />
+              </div>
+              <span className="font-mono text-[9px] text-white/50 w-14 text-right shrink-0">{item.label}</span>
+              {item.note && <span className="font-mono text-[8px] text-white/15 w-14 shrink-0">{item.note}</span>}
+              {!item.note && <span className="w-14 shrink-0" />}
             </div>
           ))}
         </div>
-        <div className="mt-3 flex items-center gap-2">
-          <span className="font-mono text-[10px] text-white/30">COSTO GPT-4 NIVEL:</span>
+        <div className="mt-4 flex items-center gap-2">
+          <span className="font-mono text-[10px] text-white/30">RESULTADO:</span>
           <span className="font-mono text-[10px] text-white/15 line-through">$30</span>
           <span className="font-mono text-[10px] text-white/20">→</span>
-          <span ref={costRef} className="font-mono text-sm text-green-400/60 font-bold">$30</span>
-          <span className="font-mono text-[10px] text-white/20">en menos de 3 años</span>
-          <span className="font-mono text-[9px] text-white/10 ml-2">— reducción 30×</span>
+          <span ref={costRef} className="font-mono text-sm text-white font-bold">$30</span>
+          <span className="font-mono text-[10px] text-white/30">en 3 años</span>
+          <span className="font-mono text-[10px] text-white/50 ml-2">— reducción 200×</span>
         </div>
       </div>
 
@@ -94,11 +103,11 @@ export const ModelSlide: React.FC<SlideProps> = ({ isActive }) => {
             <div key={i}>
               <div className="flex items-center justify-between mb-1">
                 <span className="font-mono text-[9px] text-white/40">{item.bench} <span className="text-white/15">({item.sub})</span></span>
-                <span className="font-mono text-[9px] text-green-400/50">{item.label}</span>
+                <span className="font-mono text-[9px] text-white/60">{item.label}</span>
               </div>
               <div className="flex-1 h-[6px] bg-white/5 overflow-hidden relative">
-                <div className="absolute h-full bg-white/10" style={{ width: `${item.before}%` }} />
-                <div className="absolute h-full bg-green-400/40" style={{ width: `${item.after}%` }} />
+                <div className="absolute h-full bg-red-400/20" style={{ width: `${item.before}%` }} />
+                <div className="absolute h-full bg-white/60" style={{ width: `${item.after}%` }} />
               </div>
             </div>
           ))}
