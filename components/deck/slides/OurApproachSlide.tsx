@@ -23,9 +23,9 @@ export const OurApproachSlide: React.FC<SlideProps> = ({ isActive }) => {
   }, [isActive]);
 
   return (
-    <div ref={containerRef} className="w-full max-w-4xl">
+    <div ref={containerRef} className="w-full max-w-5xl">
       <div ref={(el: HTMLDivElement | null) => { elementsRef.current[0] = el; }} className="opacity-0">
-        <span className="font-mono text-[10px] text-white/20 tracking-[0.3em]">07 // OUR_APPROACH</span>
+        <span className="font-mono text-[10px] text-white/20 tracking-[0.3em]">06 // OUR_APPROACH</span>
       </div>
 
       <div ref={(el: HTMLDivElement | null) => { elementsRef.current[1] = el; }} className="mt-6 opacity-0">
@@ -36,45 +36,53 @@ export const OurApproachSlide: React.FC<SlideProps> = ({ isActive }) => {
         </h2>
       </div>
 
-      <div ref={(el: HTMLDivElement | null) => { elementsRef.current[2] = el; }} className="mt-10 md:mt-12 opacity-0">
+      <div ref={(el: HTMLDivElement | null) => { elementsRef.current[2] = el; }} className="mt-8 md:mt-10 opacity-0">
         <p className="font-mono text-sm md:text-base text-white/50 leading-relaxed max-w-2xl">
-          No construimos tecnología por construir. Construimos
-          <span className="text-white/80"> algoritmos de rentabilidad</span> que
-          <span className="text-green-400/60"> aumentan revenue</span> o
-          <span className="text-green-400/60"> reducen costos</span>.
+          Hoy no tiene sentido construir tecnología solo con gente técnica.
+          <span className="text-white/80"> Necesitas gente que entienda negocio, procesos, finanzas Y tecnología.</span>
         </p>
       </div>
 
-      <div ref={(el: HTMLDivElement | null) => { elementsRef.current[3] = el; }} className="mt-10 opacity-0">
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+      <div ref={(el: HTMLDivElement | null) => { elementsRef.current[3] = el; }} className="mt-8 opacity-0">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4">
           {[
-            { label: 'NEGOCIO', icon: '◆' },
-            { label: 'PROCESOS', icon: '◆' },
-            { label: 'FINANZAS', icon: '◆' },
-            { label: 'TECNOLOGÍA', icon: '◆' },
+            { label: 'NEGOCIO', desc: 'Estrategia y modelo', icon: '◆' },
+            { label: 'PROCESOS', desc: 'Cómo realmente funciona', icon: '◆' },
+            { label: 'FINANZAS', desc: 'ROI y rentabilidad', icon: '◆' },
+            { label: 'TECNOLOGÍA', desc: 'AI agents + código', icon: '◆' },
           ].map((item, i) => (
-            <div key={i} className="border border-white/10 p-4 text-center">
-              <span className="text-white/20 text-lg block mb-2">{item.icon}</span>
-              <span className="font-mono text-[10px] text-white/50 tracking-widest">{item.label}</span>
+            <div key={i} className="border border-white/10 p-4 text-center hover:border-white/20 transition-colors">
+              <span className="text-green-400/30 text-lg block mb-2">{item.icon}</span>
+              <span className="font-mono text-[10px] text-white/60 tracking-widest block">{item.label}</span>
+              <span className="font-mono text-[9px] text-white/20 block mt-1">{item.desc}</span>
             </div>
           ))}
         </div>
       </div>
 
       <div ref={(el: HTMLDivElement | null) => { elementsRef.current[4] = el; }} className="mt-8 opacity-0">
-        <div className="flex items-center gap-3">
-          <span className="h-[1px] flex-1 bg-white/10" />
-          <span className="font-mono text-[10px] text-white/30 tracking-widest">= TECH DESDE LA ESTRATEGIA</span>
-          <span className="h-[1px] flex-1 bg-white/10" />
+        <div className="border-l border-green-400/20 pl-4 md:pl-6 space-y-3">
+          <p className="font-mono text-xs md:text-sm text-white/40 leading-relaxed">
+            No construimos tecnología por construir. Construimos
+            <span className="text-white/80"> algoritmos de rentabilidad</span> —
+            apps y agentes que
+            <span className="text-green-400/60"> aumentan revenue</span> o
+            <span className="text-green-400/60"> reducen costos</span>.
+          </p>
+          <p className="font-mono text-xs text-white/30 leading-relaxed">
+            Esa combinación rara — generalistas que dominan las 4 dimensiones — es exactamente lo que somos.
+            <span className="text-white/50"> Por eso tiene sentido construirlo con nosotros.</span>
+          </p>
         </div>
       </div>
 
       <div ref={(el: HTMLDivElement | null) => { elementsRef.current[5] = el; }} className="mt-6 opacity-0">
-        <p className="font-mono text-xs text-white/20 leading-relaxed">
-          <span className="text-white/30">// </span>En esta época ganan los generalistas.
-          <br />
-          <span className="text-white/30">// </span>Negocio + procesos + finanzas + tech = la combinación rara.
-        </p>
+        <div className="flex items-center gap-3 font-mono text-[10px] text-white/15">
+          <span className="text-green-400/30">▸</span>
+          <span>Empresas con vendors especializados logran <span className="text-white/40">$3.70 de valor por cada $1 invertido</span> en AI</span>
+          <span className="text-white/10">—</span>
+          <span>top performers: <span className="text-green-400/40">$10.30</span></span>
+        </div>
       </div>
     </div>
   );

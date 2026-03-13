@@ -10,7 +10,6 @@ import { RealityCheckSlide } from './slides/RealityCheckSlide';
 import { FailedSolutionsSlide } from './slides/FailedSolutionsSlide';
 import { CustomImperativeSlide } from './slides/CustomImperativeSlide';
 import { MomentIsNowSlide } from './slides/MomentIsNowSlide';
-import { WhyFailSlide } from './slides/WhyFailSlide';
 import { OurApproachSlide } from './slides/OurApproachSlide';
 import { PricingSlide } from './slides/PricingSlide';
 import { ModelSlide } from './slides/ModelSlide';
@@ -22,7 +21,6 @@ const SLIDES = [
   FailedSolutionsSlide,
   CustomImperativeSlide,
   MomentIsNowSlide,
-  WhyFailSlide,
   OurApproachSlide,
   PricingSlide,
   ModelSlide,

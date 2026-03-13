@@ -39,25 +39,36 @@ export const RealityCheckSlide: React.FC<SlideProps> = ({ isActive }) => {
       <div ref={(el: HTMLDivElement | null) => { elementsRef.current[2] = el; }} className="mt-8 md:mt-12 max-w-2xl opacity-0">
         <p className="font-mono text-sm md:text-base text-white/50 leading-relaxed">
           Tener un equipo de tecnología ya no es opción.
-          <span className="text-white/70"> Pero crearlo es demasiado costoso y difícil.</span>
+          <span className="text-white/70"> Pero crearlo internamente es demasiado costoso y difícil.</span>
         </p>
       </div>
 
-      <div ref={(el: HTMLDivElement | null) => { elementsRef.current[3] = el; }} className="mt-6 opacity-0">
-        <div className="border-l border-white/10 pl-4 md:pl-6">
-          <p className="font-mono text-xs md:text-sm text-white/30 leading-relaxed">
-            Tus competidores se están volviendo extremadamente eficientes con IA —
-            <span className="text-red-400/60"> y tú no entenderás la razón.</span>
-          </p>
+      <div ref={(el: HTMLDivElement | null) => { elementsRef.current[3] = el; }} className="mt-8 opacity-0">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <div className="border border-red-400/10 p-4">
+            <span className="font-mono text-[10px] text-red-400/40 tracking-widest block mb-2">EQUIPO_INTERNO</span>
+            <span className="font-pixel-square text-2xl md:text-3xl text-white/60">$900K+</span>
+            <span className="font-mono text-[10px] text-white/20 block mt-1">/AÑO (CTO + DEVS + QA + DEVOPS)</span>
+          </div>
+          <div className="border border-white/10 p-4">
+            <span className="font-mono text-[10px] text-white/30 tracking-widest block mb-2">TIEMPO_RECLUTAMIENTO</span>
+            <span className="font-pixel-square text-2xl md:text-3xl text-white/60">6-12</span>
+            <span className="font-mono text-[10px] text-white/20 block mt-1">MESES PARA ARMAR EQUIPO</span>
+          </div>
+          <div className="border border-white/10 p-4">
+            <span className="font-mono text-[10px] text-white/30 tracking-widest block mb-2">ADOPCIÓN_AI</span>
+            <span className="font-pixel-square text-2xl md:text-3xl text-white/60">78%</span>
+            <span className="font-mono text-[10px] text-white/20 block mt-1">DE EMPRESAS YA USAN AI</span>
+          </div>
         </div>
       </div>
 
       <div ref={(el: HTMLDivElement | null) => { elementsRef.current[4] = el; }} className="mt-8 opacity-0">
-        <div className="flex items-center gap-3 font-mono text-[10px] text-white/20">
-          <span className="text-red-400/50">■</span>
-          <span>COST_OF_DELAY: INCREASING</span>
-          <span className="text-white/10">·····</span>
-          <span className="text-red-400/40">CRITICAL</span>
+        <div className="border-l border-green-400/20 pl-4 md:pl-6">
+          <p className="font-mono text-xs md:text-sm text-white/40 leading-relaxed">
+            Por eso lo que más hace sentido es <span className="text-green-400/60">tercerizarlo</span> —
+            <span className="text-white/60"> ahora que es posible hacerlo bien.</span>
+          </p>
         </div>
       </div>
     </div>

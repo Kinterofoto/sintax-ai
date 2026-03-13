@@ -25,7 +25,7 @@ export const CtaSlide: React.FC<SlideProps> = ({ isActive }) => {
   return (
     <div ref={containerRef} className="w-full max-w-4xl text-center">
       <div ref={(el: HTMLDivElement | null) => { elementsRef.current[0] = el; }} className="opacity-0">
-        <span className="font-mono text-[10px] text-white/20 tracking-[0.3em]">10 // INITIATE</span>
+        <span className="font-mono text-[10px] text-white/20 tracking-[0.3em]">09 // INITIATE</span>
       </div>
 
       <div ref={(el: HTMLDivElement | null) => { elementsRef.current[1] = el; }} className="mt-8 md:mt-12 opacity-0">
@@ -38,8 +38,12 @@ export const CtaSlide: React.FC<SlideProps> = ({ isActive }) => {
       </div>
 
       <div ref={(el: HTMLDivElement | null) => { elementsRef.current[2] = el; }} className="mt-6 opacity-0">
-        <p className="font-mono text-sm md:text-base text-white/30">
-          O otros lo harán — y te sacarán del mercado.
+        <p className="font-mono text-sm md:text-base text-white/40 leading-relaxed max-w-lg mx-auto">
+          Tus competidores se están volviendo extremadamente eficientes con AI —
+          <span className="text-white/70"> y no vas a entender la razón.</span>
+        </p>
+        <p className="font-mono text-xs text-white/20 mt-2">
+          84% de desarrolladores ya usan herramientas AI. El mercado de AI agents crece a <span className="text-white/40">46% anual</span>.
         </p>
       </div>
 

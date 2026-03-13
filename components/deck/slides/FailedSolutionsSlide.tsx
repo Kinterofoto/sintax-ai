@@ -25,18 +25,27 @@ export const FailedSolutionsSlide: React.FC<SlideProps> = ({ isActive }) => {
   return (
     <div ref={containerRef} className="w-full max-w-5xl">
       <div ref={(el: HTMLDivElement | null) => { elementsRef.current[0] = el; }} className="opacity-0">
-        <span className="font-mono text-[10px] text-white/20 tracking-[0.3em]">03 // FAILED_SOLUTIONS</span>
+        <span className="font-mono text-[10px] text-white/20 tracking-[0.3em]">03 // FAILED_ALTERNATIVES</span>
       </div>
 
       <div ref={(el: HTMLDivElement | null) => { elementsRef.current[1] = el; }} className="mt-6 opacity-0">
         <h2 className="text-[7vw] md:text-[4.5vw] font-pixel-square font-bold leading-[0.9] tracking-tight text-white uppercase">
-          <GlitchText text="THE OUTSOURCING TRAP" trigger={isActive} className="text-inherit font-inherit" />
+          <GlitchText text="NOT ALL TECH" trigger={isActive} className="text-inherit font-inherit" />
+          <br />
+          <GlitchText text="IS EQUAL" trigger={isActive} className="text-inherit font-inherit" />
         </h2>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 mt-10 md:mt-14">
+      <div ref={(el: HTMLDivElement | null) => { elementsRef.current[2] = el; }} className="mt-4 opacity-0">
+        <p className="font-mono text-xs md:text-sm text-white/30 max-w-xl leading-relaxed">
+          Tercerizar tecnología es la respuesta — pero hay que elegir bien cómo.
+          <span className="text-white/50"> El 95% de implementaciones con AI fallan.</span>
+        </p>
+      </div>
+
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 mt-8 md:mt-10">
         {/* Column 1: Agents as a Service */}
-        <div ref={(el: HTMLDivElement | null) => { elementsRef.current[2] = el; }} className="opacity-0">
+        <div ref={(el: HTMLDivElement | null) => { elementsRef.current[3] = el; }} className="opacity-0">
           <div className="border border-white/10 p-6 md:p-8 relative">
             <span className="absolute -top-3 left-4 bg-[#050505] px-2 font-mono text-[10px] text-red-400/60 tracking-widest">
               AGENTS_AS_A_SERVICE
@@ -48,21 +57,21 @@ export const FailedSolutionsSlide: React.FC<SlideProps> = ({ isActive }) => {
               </li>
               <li className="flex items-start gap-2">
                 <span className="text-red-400/40 mt-0.5">×</span>
-                <span>Difíciles de encontrar, requieren mucho tiempo y estudio</span>
+                <span>Requieren mucho tiempo de estudio y configuración</span>
               </li>
               <li className="flex items-start gap-2">
                 <span className="text-red-400/40 mt-0.5">×</span>
-                <span>Limitados a las integraciones que tengan disponibles</span>
+                <span>Limitados a integraciones disponibles</span>
               </li>
             </ul>
           </div>
         </div>
 
         {/* Column 2: Generic Apps */}
-        <div ref={(el: HTMLDivElement | null) => { elementsRef.current[3] = el; }} className="opacity-0">
+        <div ref={(el: HTMLDivElement | null) => { elementsRef.current[4] = el; }} className="opacity-0">
           <div className="border border-white/10 p-6 md:p-8 relative">
             <span className="absolute -top-3 left-4 bg-[#050505] px-2 font-mono text-[10px] text-red-400/60 tracking-widest">
-              GENERIC_APPS
+              APPS_GENÉRICAS
             </span>
             <ul className="space-y-3 font-mono text-xs md:text-sm text-white/40 leading-relaxed">
               <li className="flex items-start gap-2">
@@ -82,12 +91,13 @@ export const FailedSolutionsSlide: React.FC<SlideProps> = ({ isActive }) => {
         </div>
       </div>
 
-      <div ref={(el: HTMLDivElement | null) => { elementsRef.current[4] = el; }} className="mt-8 opacity-0">
-        <p className="font-mono text-xs text-white/20 leading-relaxed">
-          <span className="text-white/30">// </span>Es como contratar un celador — hace lo mismo sin importar la empresa.
-          <br />
-          <span className="text-white/30">// </span>Pero para tus procesos core, tercerizar siempre será difícil.
-        </p>
+      <div ref={(el: HTMLDivElement | null) => { elementsRef.current[5] = el; }} className="mt-8 opacity-0">
+        <div className="flex items-center gap-4 font-mono text-[10px] text-white/20">
+          <span className="text-white/30">STAT:</span>
+          <span>Solo <span className="text-white/50">22%</span> de builds internos de AI tienen éxito</span>
+          <span className="text-white/10">vs</span>
+          <span><span className="text-green-400/50">67%</span> con vendors especializados</span>
+        </div>
       </div>
     </div>
   );

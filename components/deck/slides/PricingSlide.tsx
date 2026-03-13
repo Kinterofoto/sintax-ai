@@ -25,7 +25,7 @@ export const PricingSlide: React.FC<SlideProps> = ({ isActive }) => {
   return (
     <div ref={containerRef} className="w-full max-w-4xl">
       <div ref={(el: HTMLDivElement | null) => { elementsRef.current[0] = el; }} className="opacity-0">
-        <span className="font-mono text-[10px] text-white/20 tracking-[0.3em]">08 // PRICING_PROTOCOL</span>
+        <span className="font-mono text-[10px] text-white/20 tracking-[0.3em]">07 // PRICING_PROTOCOL</span>
       </div>
 
       <div ref={(el: HTMLDivElement | null) => { elementsRef.current[1] = el; }} className="mt-6 opacity-0">
