@@ -39,8 +39,9 @@ export const CtaSlide: React.FC<SlideProps> = ({ isActive }) => {
 
       <div ref={(el: HTMLDivElement | null) => { elementsRef.current[2] = el; }} className="mt-6 opacity-0">
         <p className="font-mono text-sm md:text-base text-white/40 leading-relaxed max-w-lg mx-auto">
-          Tus competidores se están volviendo extremadamente eficientes con AI —
-          <span className="text-white/70"> y no vas a entender la razón.</span>
+          El que llega primero <span className="text-white/70">define las reglas.</span>
+          <br />
+          El resto se adapta — o desaparece.
         </p>
       </div>
 
